@@ -121,9 +121,89 @@ bool isPresent_Linear(int arr[], int start, int end, int target)
     return isPresent_Linear(arr, start + 1, end, target);
 }
 
+int Power(int number, int p)
+{
+    if (p == 0)
+    {
+        return 1;
+    }
+    return number * Power(number, p - 1);
+}
+
+bool CheckPalindrome(string s, int start, int end)
+{
+    if (start >= end)
+    {
+        return true;
+    }
+    if (s[start] != s[end])
+    {
+        return false;
+    }
+    return CheckPalindrome(s, start + 1, end - 1);
+}
+
+int gcd(int x, int y)
+{
+    if (x == 0)
+    {
+        return y;
+    }
+    if (y == 0)
+    {
+        return x;
+    }
+    return gcd(y, x % y);
+}
+
+int Count(int arr[], int start, int end, int target, int count)
+{
+    if (start > end)
+    {
+        return count;
+    }
+    if (target == arr[start])
+    {
+        count++;
+    }
+    return Count(arr, start + 1, end, target, count);
+}
+
+void GeneratePermutations(string s, int left, int right)
+{
+    if (left == right)
+    {
+        cout << s << endl;
+    }
+    for (int i = left; i <= right; i++)
+    {
+        swap(s[left], s[i]);
+        GeneratePermutations(s, left + 1, right);
+        swap(s[left], s[i]);
+    }
+}
+
+// multipy without using *
+int multiply(int a, int b)
+{
+    if (b == 0 || a == 0)
+    {
+        return 0;
+    }
+    if (b > 0)
+    {
+        return a + multiply(a, b - 1);
+    }
+    else
+    {
+        return -a + multiply(a, b + 1);
+    }
+}
+
+
+
 int main()
 {
-    int arr[5] = {1,2,3,4,5};
-    bool check = isPresent(arr, 0, 4, 2);
-    cout << check;
+    int ans = multiply(2, -3);
+    cout << ans;
 }
