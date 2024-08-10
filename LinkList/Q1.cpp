@@ -153,16 +153,71 @@ public:
 
     Node *Search(int key)
     {
-        Node* temp1 = head;
-        while(temp1 != nullptr)
+        Node *temp1 = head;
+        while (temp1 != nullptr)
         {
-            if(temp1->data == key)
+            if (temp1->data == key)
             {
                 return temp1;
             }
             temp1 = temp1->next;
         }
         return nullptr;
+    }
+
+    int RemoveFront()
+    {
+        int ReturnHead = head->data;
+        if (!isEmpty())
+        {
+            head = head->next;
+        }
+        return ReturnHead;
+    }
+
+    int RemoveTail()
+    {
+        int gettail = tail->data;
+        if (!isEmpty())
+        {
+            Node *temp1 = head;
+            Node *temp2 = head;
+            int count = 0;
+            if (head == tail)
+            {
+                delete tail;
+                head = nullptr;
+                tail = nullptr;
+            }
+            else
+            {
+                while (temp1->next != nullptr)
+                {
+                    temp1 = temp1->next;
+                    if (count == 1)
+                    {
+                        temp2 = temp2->next;
+                        count = 0;
+                    }
+                    count++;
+                }
+                delete tail;
+                tail = temp2;
+                temp2->next = nullptr;
+            }
+        }
+        return gettail;
+    }
+
+    void RemoveMiddle()
+    {
+        Node* temp1 = head;
+        Node* temp2 = head;
+        int count = 0;
+        while(temp1->next != nullptr)
+        {
+            
+        }
     }
 
     void Display()
@@ -188,6 +243,8 @@ int main()
     l.InsertAfter(11, 2);
     l.Display();
     cout << endl;
-    Node* temp = l.Search(12);
-    cout << temp->data;
+    cout << l.RemoveTail();
+    cout << endl;
+    l.Display();
+    cout << l.GetTail();
 }
