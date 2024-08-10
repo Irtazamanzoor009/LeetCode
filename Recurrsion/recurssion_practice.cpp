@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int sumOfArr(int arr[], int n)
@@ -200,10 +201,53 @@ int multiply(int a, int b)
     }
 }
 
+void Sum_Of_Even_Odd(int start, int end, int &EvenSum, int &OddSum)
+{
+    if (start > end)
+    {
+        return;
+    }
+    if (start % 2 == 0)
+    {
+        EvenSum += start;
+    }
+    else
+    {
+        OddSum += start;
+    }
+    Sum_Of_Even_Odd(start + 1, end, EvenSum, OddSum);
+}
 
+bool isPrime(int n)
+{
+    if (n <= 1)
+        return false;
+    if (n == 2)
+        return true;
+    if (n % 2 == 0)
+        return false;
+
+    for (int i = 3; i <= sqrt(n); i += 2)
+    {
+        if (n % i == 0)
+            return false;
+    }
+
+    return true;
+}
+
+int sumOfPrime(int start, int end)
+{
+    if (start > end)
+    {
+        return 0;
+    }
+    int sum = isPrime(start) ? start : 0;
+    return sum + sumOfPrime(start + 1, end);
+}
 
 int main()
 {
-    int ans = multiply(2, -3);
-    cout << ans;
+    int sum = sumOfPrime(1,7);
+    cout << sum;
 }
