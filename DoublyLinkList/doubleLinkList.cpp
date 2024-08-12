@@ -176,8 +176,10 @@ public:
         }
         else
         {
-            
+            tail->previous->next = nullptr;
+            tail = tail->previous;
         }
+        size--;
     }
 
     void Display()
@@ -211,7 +213,7 @@ int main()
     l.InsertAtTail(3);
     l.InsertAtTail(4);
     l.InsertAtTail(5);
-    l.RemoveFront();
+    l.RemoveEnd();
     l.Display();
-    cout << l.GetFront();
+    cout << l.GetTail();
 }
