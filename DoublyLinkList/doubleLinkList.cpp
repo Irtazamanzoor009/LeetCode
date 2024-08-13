@@ -66,7 +66,7 @@ public:
 
     bool isEmpty()
     {
-        if(head == nullptr && tail == nullptr)
+        if (head == nullptr && tail == nullptr)
         {
             return true;
         }
@@ -94,7 +94,7 @@ public:
         }
         else
         {
-            if(temp == tail)
+            if (temp == tail)
             {
                 InsertAtTail(value);
             }
@@ -111,23 +111,23 @@ public:
 
     void InsertBefore(int value, int key)
     {
-        Node* temp = head;
-        Node* new_node = new Node(value);
-        while(temp != nullptr)
+        Node *temp = head;
+        Node *new_node = new Node(value);
+        while (temp != nullptr)
         {
-            if(temp->data == key)
+            if (temp->data == key)
             {
                 break;
             }
             temp = temp->next;
         }
-        if(temp == nullptr)
+        if (temp == nullptr)
         {
             return;
         }
         else
         {
-            if(temp == head)
+            if (temp == head)
             {
                 InsertAtHead(value);
             }
@@ -142,44 +142,56 @@ public:
         }
     }
 
+    Node *GetHead()
+    {
+        return head;
+    }
+
+    Node *GetTail()
+    {
+        return tail;
+    }
+
     int GetFront()
     {
         return head->data;
     }
 
-    int GetTail()
+    int GetBack()
     {
         return tail->data;
     }
 
     void RemoveFront()
     {
-        if(head == tail)
+        if (head == tail)
         {
             head = nullptr;
             tail = nullptr;
+            size--;
         }
         else
         {
             head->next->previous = nullptr;
             head = head->next;
+            size--;
         }
-        size--;
     }
 
     void RemoveEnd()
     {
-        if(head == tail)
+        if (head == tail)
         {
             head = nullptr;
             tail = nullptr;
+            size--;
         }
         else
         {
             tail->previous->next = nullptr;
             tail = tail->previous;
+            size--;
         }
-        size--;
     }
 
     void Display()
@@ -193,10 +205,72 @@ public:
         cout << "NULL" << endl;
     }
 
+    void RemoveAtSpecificPosition(int key)
+    {
+        Node *temp = head;
+        while (temp != nullptr)
+        {
+            if (temp->data == key)
+            {
+                break;
+            }
+            temp = temp->next;
+        }
+        if (temp == nullptr)
+        {
+            return;
+        }
+        else
+        {
+            if (temp == head)
+            {
+                RemoveFront();
+            }
+            else if (temp == tail)
+            {
+                RemoveEnd();
+            }
+            else if (temp != head && temp != tail)
+            {
+                temp->previous->next = temp->next;
+                temp->next->previous = temp->previous;
+                delete temp;
+            }
+        }
+    }
+
+    void DeleteDataWithIndex(int index)
+    {
+        if (index < 0 || index >= size)
+        {
+            return;
+        }
+        else if (index == 0)
+        {
+            RemoveFront();
+        }
+        else if (index == size - 1)
+        {
+            RemoveEnd();
+        }
+        else
+        {
+            Node *temp = head;
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp->next;
+            }
+            temp->previous->next = temp->next;
+            temp->next->previous = temp->previous;
+            delete temp;
+        }
+        size--;
+    }
+
     void DisplayReverse()
     {
-        Node* temp = tail;
-        while(temp != nullptr)
+        Node *temp = tail;
+        while (temp != nullptr)
         {
             cout << temp->data << "-------";
             temp = temp->previous;
@@ -205,15 +279,54 @@ public:
     }
 };
 
+void Splice(DoubleLinkList &l1, DoubleLinkList &l2, int key)
+{
+    Node *temp1 = l1.GetHead();
+    Node *temp1_tail = l1.GetTail();
+    Node *temp2 = l2.GetHead();
+    Node *temp2_tail = l2.GetTail();
+    while (temp1 != nullptr)
+    {
+        if (temp1->data == key)
+        {
+            break;
+        }
+        temp1 = temp1->next;
+    }
+    if (temp1 == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        if (temp1 == temp1_tail)
+        {
+            Node *new_node = l2.GetHead();
+            while (new_node != nullptr)
+            {
+                l1.InsertAtTail(new_node->data);
+                new_node = new_node->next;
+            }
+        }
+        else
+        {
+            temp2->previous = temp1;
+            temp2_tail->next = temp1->next;
+            temp1->next->previous = temp2_tail;
+            temp1->next = temp2;
+        }
+    }
+}
+
 int main()
 {
-    DoubleLinkList l;
-    l.InsertAtTail(1);
-    l.InsertAtTail(2);
-    l.InsertAtTail(3);
-    l.InsertAtTail(4);
-    l.InsertAtTail(5);
-    l.RemoveEnd();
-    l.Display();
-    cout << l.GetTail();
+    DoubleLinkList l1;
+    DoubleLinkList l2;
+
+    l1.InsertAtTail(1);
+    l1.InsertAtTail(2);
+    l1.InsertAtTail(3);
+    l1.InsertAtTail(4);
+    l1.DeleteDataWithIndex(2);
+    l1.Display();
 }
