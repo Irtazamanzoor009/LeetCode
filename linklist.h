@@ -1,15 +1,21 @@
 #include <iostream>
 using namespace std;
 
-class Node
+class ListNode
 {
 public:
     int data;
-    Node *next;
+    ListNode *next;
 
-    Node(int value)
+    ListNode(int value)
     {
         data = value;
+        next = nullptr;
+    }
+
+    ListNode()
+    {
+        data = 0;
         next = nullptr;
     }
 };
@@ -17,8 +23,8 @@ public:
 class LinkList
 {
 private:
-    Node *head;
-    Node *tail;
+    ListNode *head;
+    ListNode *tail;
 
 public:
     LinkList()
@@ -27,14 +33,14 @@ public:
         tail = nullptr;
     }
 
-    Node* GetHead()
+    ListNode* GetHead()
     {
         return head;
     }
 
     void Insert(int value)
     {
-        Node *temp = new Node(value);
+        ListNode *temp = new ListNode(value);
         if (head == nullptr)
         {
             head = temp;
@@ -46,9 +52,19 @@ public:
             tail = temp;
         }
     }
+    void Display(ListNode* head1)
+    {
+        ListNode* temp = head1;
+        while(temp != nullptr)
+        {
+            cout << temp->data << "-------";
+            temp = temp->next;
+        }
+        cout << "NULL";
+    }
     void Display()
     {
-        Node* temp = head;
+        ListNode* temp = head;
         while(temp != nullptr)
         {
             cout << temp->data << "-------";
@@ -58,13 +74,3 @@ public:
 
     }
 };
-
-int main()
-{
-    LinkList l;
-    l.Insert(2);
-    l.Insert(3);
-    l.Insert(4);
-    l.Insert(5);
-    l.Display();
-}
