@@ -1,2 +1,5 @@
-int sum = accumulate(arr.begin(), arr.end(),0);
-    cout << sum;
+l.addAtTail(5);
+    // l.Display();
+
+    // l.addAtIndex(6,3);
+    // l.Display();
