@@ -88,7 +88,17 @@ public:
         {
             return top->data;
         }
-        return GetEnd(top->left);
+        else
+        {
+            if(top->left != nullptr)
+            {
+                return GetEnd(top->left);
+            }
+            else if(top->right != nullptr)
+            {
+                return GetEnd(top->right);
+            }
+        }
     }
 
     Node* GetTop()
