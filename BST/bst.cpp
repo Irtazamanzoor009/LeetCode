@@ -78,34 +78,51 @@ public:
         }
     }
 
-    int GetEnd(Node* top)
+    int GetEnd(Node *top)
     {
-        if(top == nullptr)
+        if (top == nullptr)
         {
             return -1;
         }
-        else if(top->left == nullptr && top->right == nullptr)
+        else if (top->left == nullptr && top->right == nullptr)
         {
             return top->data;
         }
         else
         {
-            if(top->left != nullptr)
+            if (top->left != nullptr)
             {
                 return GetEnd(top->left);
             }
-            else if(top->right != nullptr)
+            else if (top->right != nullptr)
             {
                 return GetEnd(top->right);
             }
         }
     }
 
-    Node* GetTop()
+    Node *GetTop()
     {
         return top;
     }
 };
+
+bool isIndentical(Node *root1, Node *root2)
+{
+    if (root1 == nullptr && root2 == nullptr)
+    {
+        return true;
+    }
+    if(root1 == nullptr || root2 == nullptr)
+    {
+        return false;
+    }
+    if (root1->data != root2->data)
+    {
+        return false;
+    }
+    return isIndentical(root1->left, root2->left) && isIndentical(root1->right, root2->right);
+}
 
 int main()
 {
@@ -117,6 +134,18 @@ int main()
     b.InsertInBST(20);
     b.InsertInBST(25);
     b.InsertInBST(40);
-    Node* top = b.GetTop();
-    cout << b.GetEnd(top);
+    Node *top = b.GetTop();
+    
+    BST b2;
+    b2.InsertInBST(22);
+    b2.InsertInBST(12);
+    b2.InsertInBST(30);
+    b2.InsertInBST(8);
+    b2.InsertInBST(20);
+    b2.InsertInBST(25);
+    b2.InsertInBST(40);
+    Node *top2 = b2.GetTop();
+
+    cout << isIndentical(top,top2);
+
 }
